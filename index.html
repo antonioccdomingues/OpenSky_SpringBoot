@@ -1,0 +1,79 @@
+<body>
+<div id="wrapper">
+    <meta http-equiv="refresh" content="300">
+    <h1>24H Humberto Delgado Flights</h1>
+    <h1 style="font-size:20px"> Get the last 7 days history flights
+        <a href="history.html" ><button style="font-size:12px">Go To History</button></a>
+    </h1>
+    <h1 style="font-size:20px"> Get this info in a map
+        <a href="map.html" ><button style="font-size:12px">Go To Map</button></a>
+    </h1>
+</body>
+
+<table id="keywords" cellspacing="0" cellpadding="0">
+    <link rel="stylesheet" href="mycc.css">
+    <thead>
+    <tr>
+        <th><span>Flight</span></th>
+        <th><span>Voo</span></th>
+        <th><span>ID</span></th>
+        <th><span>Previously Airport</span></th>
+        <th><span>Left At</span></th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    </tbody>
+</table>
+<script type = "text/javascript">
+    const flightsBody = document.querySelector("#keywords > tbody");
+
+
+    function loadFlights (){
+        const request = new XMLHttpRequest();
+
+        request.open("get", "http://localhost:8080/api/flights");
+        request.onload = () => {
+            try{
+                const json = JSON.parse(request.responseText);
+                populateFlights(json);
+            } catch(e){
+                console.warn("Could not load Flights!");
+            }
+        };
+
+        request.send();
+    }
+
+    function loadData (){
+        const request = new XMLHttpRequest();
+
+        request.open("post", "http://localhost:8080/api/update");
+        request.send();
+    }
+
+    function populateFlights(json){
+        var i=1;
+        json.forEach((obj) => {
+
+            const tr = document.createElement("tr");
+            var temp = [i, obj.callsign, obj.icao24, obj.estDepartureAirport, obj.lastSeen];
+            i = i+1;
+            temp.forEach((cell) =>{
+
+                const td = document.createElement("td");
+                td.style.textAlign="center";
+                td.textContent = cell;
+                tr.appendChild(td);
+
+            });
+            flightsBody.appendChild(tr);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => { loadFlights(); });
+    document.addEventListener("DOMContentLoaded", () => { loadData(); });
+
+</script>
+

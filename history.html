@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>History</title>
+</head>
+<body>
+<body>
+<div id="wrapper">
+    <h1>7 Days Humberto Delgado Flights</h1>
+    <h1 style="font-size:20px"> Go Back to Live INFO
+        <a href="index.html" ><button style="font-size:12px">Live</button></a>
+    </h1>
+</body>
+
+<table id="keywords" cellspacing="0" cellpadding="0">
+    <link rel="stylesheet" href="mycc.css">
+    <thead>
+    <tr>
+        <th><span>Flight</span></th>
+        <th><span>Voo</span></th>
+        <th><span>ID</span></th>
+        <th><span>Previously Airport</span></th>
+        <th><span>Last Seen</span></th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    </tbody>
+</table>
+<script type = "text/javascript">
+    const flightsBody = document.querySelector("#keywords > tbody");
+
+
+    function loadFlights (){
+        const request = new XMLHttpRequest();
+
+        request.open("get", "http://localhost:8080/api/history");
+        request.onload = () => {
+            try{
+                const json = JSON.parse(request.responseText);
+                populateFlights(json);
+            } catch(e){
+                console.warn("Could not load Flights!");
+            }
+        };
+
+        request.send();
+    }
+
+    function populateFlights(json){
+        //clears table data
+        // while(flightsBody.firstChild){
+        //     //flightsBody.removeChild(flightsBody.firstChild);
+        // }
+        //populate table
+        var i=1;
+        json.forEach((obj) => {
+
+            const tr = document.createElement("tr");
+            var temp = [i, obj.callsign, obj.icao24, obj.estDepartureAirport, obj.lastSeen];
+            i = i+1;
+            //console.log(temp);
+
+            temp.forEach((cell) =>{
+
+                const td = document.createElement("td");
+                td.style.textAlign="center";
+                td.textContent = cell;
+                tr.appendChild(td);
+
+            });
+
+            // obj.forEach((temp) => {
+            //     const td = document.createElement("td");
+            //     td.textContent= temp;
+            //     tr.appendChild(td);
+            // });
+
+
+            //console.log(obj.callsign);
+            // console.log(obj.icao24);
+            // console.log(obj.estDepartureAirport);
+            // console.log(obj.lastSeen);
+
+
+            //td.textContent = obj.callsign + "   " + obj.icao24 +"   " + obj.estDepartureAirport + "   " + obj.lastSeen;
+
+            //tr.appendc(td);
+
+
+            flightsBody.appendChild(tr);
+
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => { loadFlights(); });
+
+</script>
+</body>
+</html>

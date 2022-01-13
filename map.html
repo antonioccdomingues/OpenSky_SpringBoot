@@ -1,0 +1,93 @@
+<h1 style="font-size:20px"> Go Back to Live INFO
+    <a href="index.html" ><button style="font-size:12px">Live</button></a>
+</h1>
+<div id="googleMap" style="width: 100%; height: 100%;"></div>
+
+    <script th:inline="javascript">
+
+
+
+    function loadFlights (){
+        const request = new XMLHttpRequest();
+
+        request.open("get", "http://localhost:8080/api/flights"); //mudar este get, conforme o mapping
+        request.onload = () => {
+            try{
+                const json = JSON.parse(request.responseText);
+                Maps(json);
+            } catch(e){
+                console.warn("Could not load Flights!");
+            }
+        };
+
+        request.send();
+    }
+
+    var markers=[];
+    //var newMarker;
+
+    function Maps(json){
+        var i=1;
+
+        var mapProp= {
+                center:new google.maps.LatLng(38.775275699356314, -9.135843353807045),
+                zoom:15,
+               // mapTypeId: "satellite",
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            json.forEach((obj) => {
+                const tr = document.createElement("tr");
+                var temp = [i];
+                i = i+1;
+
+                var plane_info = [obj.callsign, obj.icao24, obj.estDepartureAirport, obj.lastSeen];
+
+                temp.forEach((obj) =>{
+                    
+                    const contentString ="Voo id: "+plane_info[0] + ", Plane Chassis: " + plane_info[1]+ ", Departure Airport: " + plane_info[2]+ ", Last Seen: " + plane_info[3];
+                    console.log(contentString);
+                    console.log("Airplane " + i);
+
+                    const infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    });
+
+
+                    const newMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(getRandomArbitrary(38.76450596898016, 38.78761708928799), getRandomArbitrary(-9.144989107270954, -9.12991438259596)),
+                    icon: {
+                        url: 'https://pics.clipartpng.com/Airplane_PNG_Clipart-421.png',
+                        scaledSize: new google.maps.Size(30, 30)
+                    },
+                    map: map,
+                    title: "Airplane " + i,
+                    });
+                    
+                    // adicionar um listener, para quando se clica nele, aparecer uma janela de informação
+                    newMarker.addListener("click", () => {
+                        infowindow.open(map, newMarker);
+                    });
+                    // adicionar um listener ao marker, para quando o rato sai do icon, a janela de informação desaparecer
+                    newMarker.addListener('mouseout', () => {
+                        infowindow.close();
+                    })
+                    //para o caso de haver categorias
+                    newMarker.category=1;
+                    newMarker.setVisible(true);
+                    markers.push(newMarker);
+
+                    
+                });
+            
+        });
+    }
+
+    function getRandomArbitrary(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => { loadFlights(); });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk0ZnJTY4g4euP07og1_w5_5FSRcJ-y4k&callback=Maps&libraries=&v=weekly"></script>

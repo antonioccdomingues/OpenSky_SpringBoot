@@ -1,0 +1,16 @@
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/services/ProducerService.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/AirportApplication.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/services/models/Flight.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/external/OpenSkyDto.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/messaging/KafkaConsumer.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/persistance/entity/FlightEntity.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/external/OpenSkyClient.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/messaging/KafkaProducer.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/config/AppConfig.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/web/dto/FlightDto.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/services/FlightService.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/web/config/WebConfig.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/web/controller/FlightController.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/persistance/repository/FlightRepository.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/data/messaging/KafkaBeanConfig.java
+/home/antonio/Desktop/ES/airportES/src/main/java/com/P1L15/airport/web/controller/KafkaController.java
